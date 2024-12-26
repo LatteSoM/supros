@@ -1,0 +1,9 @@
+<!-- templates/role_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Отдел: {{ department.name }}</h2>
+<p>Идентификатор: {{ department.id }}</p>
+<p>Описание: {{ department.description }}</p>
+<a href="{% url 'department_list' %}">Назад к списку</a>
+{% endblock %}

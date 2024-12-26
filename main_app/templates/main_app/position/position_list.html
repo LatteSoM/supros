@@ -1,0 +1,19 @@
+<!-- templates/role_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список Должностей</h2>
+<a href="{% url 'position_add' %}">Добавить Должность</a>
+<ul>
+    {% for position in positions %}
+        <div class="d-flex justify-content-between col-5 gap 1" >
+            <a style="text-decoration: None; color: black" href="{% url 'position_detail' position.pk %}">{{ position.name }} - {{ position.department }}</a>
+            <div class="btn btn-primary">
+                <a style="color: white; text-decoration: None" href="{% url 'position_edit' position.pk %}">Редактировать</a>
+            </div>
+            <a class="btn btn-danger" href="{% url 'position_delete' position.pk %}">Удалить</a>
+        </div>
+        <br>
+    {% endfor %}
+</ul>
+{% endblock %}

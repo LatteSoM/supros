@@ -1,0 +1,305 @@
+{#{% extends 'base.html' %}#}
+{#{% load static %}#}
+{#{% block content %}#}
+{#<div class="container mt-4">#}
+{#    <h1>Отделы</h1>#}
+{##}
+{#    <div class="mb-3 d-flex justify-content-between">#}
+{#        <input type="text" id="search" placeholder="Поиск по названию" class="form-control me-2" oninput="filterDepartments()">#}
+{#        <select id="sort" class="form-select me-2" onchange="filterDepartments()">#}
+{#            <option value="name">По алфавиту</option>#}
+{#            <option value="employee_count">По количеству сотрудников</option>#}
+{#        </select>#}
+{#        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">Добавить отдел</button>#}
+{#    </div>#}
+{##}
+{#    <div id="department-list" class="row">#}
+{#        {% for department in departments %}#}
+{#            <div class="col-md-4 mb-3">#}
+{#                <div class="card">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">{{ department.name }}</h5>#}
+{#                        <p>Сотрудников: {{ department.employee_count }}</p>#}
+{#                        <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editDepartmentModal" onclick="editDepartment({{ department.id }})">Изменить</button>#}
+{#                        <button class="btn btn-danger" onclick="deleteDepartment({{ department.id }})">Удалить</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<!-- Модальное окно для добавления отдела -->#}
+{#<div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">#}
+{#    <div class="modal-dialog">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-header">#}
+{#                <h5 class="modal-title" id="addDepartmentModalLabel">Добавить отдел</h5>#}
+{#                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{#                <form id="add-department-form">#}
+{#                    <div class="mb-3">#}
+{#                        <label for="department-name" class="form-label">Название отдела</label>#}
+{#                        <input type="text" class="form-control" id="department-name" required>#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="department-description" class="form-label">Описание отдела</label>#}
+{#                        <textarea class="form-control" id="department-description"></textarea>#}
+{#                    </div>#}
+{#                    <button type="submit" class="btn btn-primary">Сохранить</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#{% endblock %}#}
+{##}
+{#<script>#}
+{#    function filterDepartments() {#}
+{#        const query = document.getElementById('search').value;#}
+{#        const sort = document.getElementById('sort').value;#}
+{#        window.location.href = `?q=${query}&sort=${sort}`;#}
+{#    }#}
+{##}
+{#    function editDepartment(departmentId) {#}
+{#        // Подготовка формы для редактирования отдела#}
+{#    }#}
+{##}
+{#    function deleteDepartment(departmentId) {#}
+{#        if (confirm('Вы уверены, что хотите удалить отдел?')) {#}
+{#            // Отправка запроса на удаление#}
+{#        }#}
+{#    }#}
+{#</script>#}
+
+
+{##}
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-4">#}
+{#    <h1>Отделы</h1>#}
+{##}
+{#    <!-- Форма фильтрации и сортировки -->#}
+{#    <form method="get" class="mb-3 d-flex justify-content-between align-items-center">#}
+{#        {{ form.query }}#}
+{#        {{ form.sort_by }}#}
+{#        <button type="submit" class="btn btn-primary">Применить фильтры</button>#}
+{#        <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">Добавить отдел</button>#}
+{#        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">#}
+{#          добавить отдел#}
+{#        </button>#}
+{#    </form>#}
+{##}
+{#    <!-- Список отделов -->#}
+{#    <div id="department-list" class="row">#}
+{#        {% for department in departments %}#}
+{#            <div class="col-md-4 mb-3">#}
+{##}
+{#                    <div class="card">#}
+{#                        <div class="card-body">#}
+{#                            <a href="{% url 'deps_detail' department.id %}" class="text-decoration-none">#}
+{#                                <h5 class="card-title">{{ department.name }}</h5>#}
+{#                                <p>Сотрудников: {{ department.employee_count }}</p>#}
+{#                            </a>#}
+{#                            <a href="{% url 'department_edit' department.id %}" class="btn btn-warning me-2" >Изменить</a>#}
+{#                            <button class="btn btn-danger" onclick="deleteDepartment({{ department.id }})">Удалить</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#</div>#}
+{#<!-- Модальное окно для добавления отдела -->#}
+{##}
+{#    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">#}
+{#    <div class="modal-dialog">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-header">#}
+{#                <h5 class="modal-title" id="addDepartmentModalLabel">Добавить отдел</h5>#}
+{#                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{#                <form id="add-department-form">#}
+{#                    <div class="mb-3">#}
+{#                        <label for="department-name" class="form-label">Название отдела</label>#}
+{#                        <input type="text" class="form-control" id="department-name" required>#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="department-description" class="form-label">Описание отдела</label>#}
+{#                        <textarea class="form-control" id="department-description"></textarea>#}
+{#                    </div>#}
+{#                    <button type="submit" class="btn btn-primary">Сохранить</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#{% endblock %}#}
+{##}
+{#<script>#}
+{#    function editDepartment(departmentId) {#}
+{#        // Подготовка формы для редактирования отдела (можно загрузить данные отдела через AJAX)#}
+{#    }#}
+{##}
+{#    function deleteDepartment(departmentId) {#}
+{#        if (confirm('Вы уверены, что хотите удалить отдел?')) {#}
+{#            // Отправка запроса на удаление#}
+{#        }#}
+{#    }#}
+{#</script>#}
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Отделы</h1>
+
+    <!-- Форма фильтрации и сортировки -->
+    <form method="get" class="mb-3 d-flex justify-content-center align-items-center gap-3">
+        {{ form.query }}
+        {{ form.sort_by }}
+        <button type="submit" class="btn btn-primary" style="height: auto">Применить фильтры</button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Добавить отдел
+        </button>
+    </form>
+
+    <!-- Список отделов -->
+    <div id="department-list" class="row">
+        {% for department in departments %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{% url 'deps_detail' department.id %}" class="text-decoration-none">
+                            <h5 class="card-title">{{ department.name }}</h5>
+                            <p>Сотрудников: {{ department.employee_count }}</p>
+                        </a>
+                        <a href="{% url 'department_edit' department.id %}" class="btn btn-warning me-2">Изменить</a>
+                        <button class="btn btn-danger" onclick="deleteDepartment({{ department.id }})">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Модальное окно для добавления отдела -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Добавить отдел</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-department-form" method="POST" action="">
+                    {% csrf_token %}
+                    {{ form_add.as_p }} <!-- Встроенное отображение полей формы -->
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{##}
+{#<script>#}
+{#    document.getElementById('add-department-form').addEventListener('submit', function(e) {#}
+{#        e.preventDefault();#}
+{##}
+{#        const formData = new FormData(this);#}
+{##}
+{#        fetch("{% url 'deps_list' %}", {#}
+{#            method: 'POST',#}
+{#            headers: {#}
+{#                'X-CSRFToken': '{{ csrf_token }}',#}
+{#                'X-Requested-With': 'XMLHttpRequest'#}
+{#            },#}
+{#            body: formData#}
+{#        })#}
+{#        .then(response => response.json())#}
+{#        .then(data => {#}
+{#            if (data.success) {#}
+{#                const department = data.department;#}
+{#                const departmentList = document.getElementById('department-list');#}
+{##}
+{#                // Добавляем новый отдел в конец списка#}
+{#                const newDepartmentHtml = `#}
+{#                    <div class="col-md-4 mb-3">#}
+{#                        <div class="card">#}
+{#                            <div class="card-body">#}
+{#                                <a href="{% url 'deps_detail' 0 %}".replace('0', department.id) class="text-decoration-none">#}
+{#                                    <h5 class="card-title">${department.name}</h5>#}
+{#                                    <p>Сотрудников: ${department.employee_count}</p>#}
+{#                                </a>#}
+{#                                <a href="{% url 'department_edit' 0 %}".replace('0', department.id) class="btn btn-warning me-2">Изменить</a>#}
+{#                                <button class="btn btn-danger" onclick="deleteDepartment(${department.id})">Удалить</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                `;#}
+{#                departmentList.insertAdjacentHTML('beforeend', newDepartmentHtml);#}
+{##}
+{#                // Закрытие модального окна#}
+{#                document.querySelector('#staticBackdrop .btn-close').click();#}
+{#                document.getElementById('add-department-form').reset(); // Сброс формы#}
+{#            } else {#}
+{#                alert('Ошибка при добавлении отдела.');#}
+{#                console.error('Errors:', data.errors); // Отладка ошибок#}
+{#            }#}
+{#        })#}
+{#        .catch(error => {#}
+{#            console.error('Ошибка запроса:', error); // Отладка ошибок запроса#}
+{#        });#}
+{#    });#}
+{#</script>#}
+
+
+{#<script>#}
+{#    document.getElementById('add-department-form').addEventListener('submit', function(e) {#}
+{#        e.preventDefault();#}
+{##}
+{#        const formData = new FormData(this);#}
+{#        fetch("{% url 'deps_list' %}", {#}
+{#            method: 'POST',#}
+{#            headers: {#}
+{#                'X-CSRFToken': '{{ csrf_token }}',#}
+{#                'X-Requested-With': 'XMLHttpRequest'#}
+{#            },#}
+{#            body: formData#}
+{#        })#}
+{#        .then(response => response.json())#}
+{#        .then(data => {#}
+{#            if (data.success) {#}
+{#                const department = data.department;#}
+{#                const departmentList = document.getElementById('department-list');#}
+{#                const newDepartmentHtml = `#}
+{#                    <div class="col-md-4 mb-3">#}
+{#                        <div class="card">#}
+{#                            <div class="card-body">#}
+{#                                <a href="{% url 'deps_detail' 0 %}".replace('0', department.id) class="text-decoration-none">#}
+{#                                    <h5 class="card-title">${department.name}</h5>#}
+{#                                    <p>Сотрудников: ${department.employee_count}</p>#}
+{#                                </a>#}
+{#                                <a href="{% url 'department_edit' 0 %}".replace('0', department.id) class="btn btn-warning me-2">Изменить</a>#}
+{#                                <button class="btn btn-danger" onclick="deleteDepartment(${department.id})">Удалить</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                `;#}
+{#                departmentList.insertAdjacentHTML('beforeend', newDepartmentHtml);#}
+{#                document.querySelector('#staticBackdrop .btn-close').click();#}
+{#            } else {#}
+{#                alert('Ошибка: ' + JSON.stringify(data.errors));#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#</script>#}
+
+
+

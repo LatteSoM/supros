@@ -1,0 +1,75 @@
+{% include 'inc/_cnnct_links.html' %}
+{% load static %}
+<body  style="width: 100%">
+    <div class="wrapper">
+    
+        {% include 'inc/_header.html' %}
+        <main class="main">
+           <div class=" d-flex flex-row">
+          {% include 'inc/_sidebar.html' %}
+           <div class="d-flex flex-column">
+               {% include 'inc/_breadcrumbs.html' %}
+               <div class="col-12 content">
+                    {% block content %}
+                        <h1>Блок-контента</h1>
+                    {% endblock %}
+                </div>
+           </div>
+
+            </div>
+
+            <style>
+                .sidebar {
+                    width: 250px;
+                    background-color: black;
+                    color: white;
+                    transition: width 0.3s;
+                    overflow: hidden;
+                    padding: 10px;
+                }
+                .sidebar.collapsed {
+                    width: 50px;
+                }
+                .content {
+                    flex-grow: 1;
+                    padding: 20px;
+                }
+                .toggle-btn {
+                    cursor: pointer;
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                }
+            </style>
+
+            <script>
+                function toggleSidebar() {
+                    const sidebar = document.getElementById('sidebar');
+                    const toggleIcon = document.getElementById('toggle-icon');
+                    const headerText = document.querySelectorAll('h1');
+
+                    sidebar.classList.toggle('collapsed');
+
+                    if (sidebar.classList.contains('collapsed')) {
+                        toggleIcon.textContent = "="; // Меняем иконку на "="
+                        headerText.forEach((h1, index) => {
+                             h1.textContent = "A"; // Меняем текст первого заголовка на "A"
+                        });
+                    } else {
+                        toggleIcon.textContent = "☰"; // Меняем иконку обратно на "☰"
+                        headerText.forEach((h1, index) => {
+                            h1.textContent = "AAAAA"; // Возвращаем текст первого заголовка
+                        });
+                    }
+                }
+            </script>
+
+    </div>
+</body>
+
+<!-- Bootstrap JS and dependencies (e.g., Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>

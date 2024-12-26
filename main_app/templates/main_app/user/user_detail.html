@@ -1,0 +1,12 @@
+<!-- templates/role_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Юзернейм: {{ users.username }}</h2>
+<h2>Пароль: {{ users.password }}</h2>
+<h2>Создан: {{ users.created_at }}</h2>
+<h2>Работник: {{ users.employee }}</h2>
+<h2>Роль: {{ users.role.name }}</h2>
+<p>Идентификатор: {{ users.id }}</p>
+<a href="{% url 'user_list' %}">Назад к списку</a>
+{% endblock %}

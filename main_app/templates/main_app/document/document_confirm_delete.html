@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Удалить тип документа</h2>
+<p>Вы уверены, что хотите удалить документ "{{ document.document_type.name }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Да, удалить</button>
+    <a href="{% url 'document_list' %}">Отмена</a>
+</form>
+{% endblock %}

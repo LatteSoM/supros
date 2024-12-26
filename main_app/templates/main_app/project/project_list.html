@@ -1,0 +1,16 @@
+<!-- templates/role_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список Проектов</h2>
+<a href="{% url 'project_add' %}">Добавить проект</a>
+<ul>
+    {% for pojct in projects %}
+        <li style="text-decoration: none;">
+            <a style="text-decoration: none; color:black" href="{% url 'project_detail' pojct.pk %}">{{ pojct.name }}</a> -
+            <a style="text-decoration: none;" href="{% url 'project_edit' pojct.pk %}">Редактировать</a> -
+            <a style="text-decoration: none;" href="{% url 'project_delete' pojct.pk %}">Удалить</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

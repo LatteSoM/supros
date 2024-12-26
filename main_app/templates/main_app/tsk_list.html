@@ -1,0 +1,284 @@
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-4">#}
+{#    <h1>Задачи</h1>#}
+{##}
+{#    <!-- Форма фильтрации и сортировки -->#}
+{#    <form method="get" class="mb-3 d-flex justify-content-center align-items-center gap-3">#}
+{#        {{ form.search_query }}#}
+{#        {{ form.employee_name }}  <!-- Поле для поиска по имени сотрудника -->#}
+{#        {{ form.project }}#}
+{#        {{ form.sort_by }}#}
+{#        {{ form.status }}#}
+{#        <button type="submit" class="btn btn-primary" style="height: auto">Применить фильтры</button>#}
+{#        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">#}
+{#          Создать задачу#}
+{#        </button>#}
+{#    </form>#}
+{##}
+{#    <!-- Список задач -->#}
+{#    <div id="task-list" class="row">#}
+{#        {% for task in tasks %}#}
+{#            <div class="col-md-6 mb-3">#}
+{#                <div class="card border-3 rounded-4 p-4">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">{{ task.title }}</h5>#}
+{#                        <p>Ответственный: {{ task.assigned_to.last_name }} {{ task.assigned_to.first_name }}</p>#}
+{#                        <p>Проект: {{ task.project.name }}</p>#}
+{#                        <p>Статус: {{ task.status }}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<!-- Модальное окно для добавления задачи -->#}
+{#<div class="modal fade" id="addTaskModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">#}
+{#    <div class="modal-dialog">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-header">#}
+{#                <h5 class="modal-title" id="addTaskModalLabel">Создать задачу</h5>#}
+{#                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{#                <form id="add-task-form" method="POST" action="">#}
+{#                    {% csrf_token %}#}
+{#                    {{ form_add.as_p }}#}
+{#                    <button type="submit" class="btn btn-primary">Сохранить</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Задачи</h1>
+
+    <!-- Форма фильтрации и сортировки -->
+    <form method="get" class="mb-3 d-flex justify-content-center align-items-center gap-3">
+        {{ form.search_query }}
+        {{ form.employee_name }}
+        {{ form.project }}
+        {{ form.sort_by }}
+        {{ form.status }}
+        <button type="submit" class="btn btn-primary">Применить фильтры</button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+          Создать задачу
+        </button>
+    </form>
+
+    <!-- Список задач -->
+    <div id="task-list" class="row">
+        {% for task in tasks %}
+            <div class="col-md-6 mb-3">
+                <div class="card border-3 rounded-4 p-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.title }}</h5>
+                        <p>Ответственный: {{ task.assigned_to.last_name }} {{ task.assigned_to.first_name }}</p>
+                        <p>Проект: {{ task.project.name }}</p>
+                        <p>Статус: {{ task.status }}</p>
+                        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailModal{{ task.id }}">Детали</button>
+{#                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editTaskModal{{ task.id }}">Редактировать</button>#}
+                        <button class="btn btn-warning" onclick="location.href='{% url 'task_edit_page' task.id %}'">Редактировать</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Модальное окно с деталями задачи -->
+            <div class="modal fade" id="taskDetailModal{{ task.id }}" tabindex="-1" aria-labelledby="taskDetailModalLabel{{ task.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="taskDetailModalLabel{{ task.id }}">Детали задачи</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Название:</strong> {{ task.title }}</p>
+                            <p><strong>Описание:</strong> {{ task.description }}</p>
+                            <p><strong>Проект:</strong> {{ task.project.name }}</p>
+                            <p><strong>Ответственный:</strong> {{ task.assigned_to.last_name }} {{ task.assigned_to.first_name }}</p>
+                            <p><strong>Статус:</strong> {{ task.status }}</p>
+                            <p><strong>Дата создания:</strong> {{ task.created_at }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Модальное окно для редактирования задачи -->
+            <div class="modal fade" id="editTaskModal{{ task.id }}" tabindex="-1" aria-labelledby="editTaskModalLabel{{ task.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editTaskModalLabel{{ task.id }}">Редактировать задачу</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{% url 'task_edit' task.id %}">
+                                {% csrf_token %}
+                                {{ form_edit.as_p }}
+                                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Модальное окно для добавления задачи -->
+<div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTaskModalLabel">Создать задачу</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="add-task-form" method="POST" action="">
+                    {% csrf_token %}
+                    {{ form_add.as_p }}
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-4">#}
+{#    <h1>Задачи</h1>#}
+{##}
+{#    <!-- Форма фильтрации и сортировки -->#}
+{#    <form method="get" class="mb-3 d-flex justify-content-center align-items-center gap-3">#}
+{#        {{ form.search_query }}#}
+{#        {{ form.employee_name }}#}
+{#        {{ form.project }}#}
+{#        {{ form.sort_by }}#}
+{#        {{ form.status }}#}
+{#        <button type="submit" class="btn btn-primary">Применить фильтры</button>#}
+{#        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTaskModal">#}
+{#          Создать задачу#}
+{#        </button>#}
+{#    </form>#}
+{##}
+{#    <!-- Список задач -->#}
+{#    <div id="task-list" class="row">#}
+{#        {% for task in tasks %}#}
+{#            <div class="col-md-6 mb-3">#}
+{#                <div class="card">#}
+{#                    <div class="card-body">#}
+{#                        <h5 class="card-title">{{ task.title }}</h5>#}
+{#                        <p>Ответственный: {{ task.assigned_to.last_name }} {{ task.assigned_to.first_name }}</p>#}
+{#                        <p>Проект: {{ task.project.name }}</p>#}
+{#                        <p>Статус: {{ task.status }}</p>#}
+{#                        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailModal{{ task.id }}">Детали</button>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Модальное окно с деталями задачи -->#}
+{#            <div class="modal fade" id="taskDetailModal{{ task.id }}" tabindex="-1" aria-labelledby="taskDetailModalLabel{{ task.id }}" aria-hidden="true">#}
+{#                <div class="modal-dialog">#}
+{#                    <div class="modal-content">#}
+{#                        <div class="modal-header">#}
+{#                            <h5 class="modal-title" id="taskDetailModalLabel{{ task.id }}">Детали задачи</h5>#}
+{#                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#                        </div>#}
+{#                        <div class="modal-body">#}
+{#                            <p><strong>Название:</strong> {{ task.title }}</p>#}
+{#                            <p><strong>Описание:</strong> {{ task.description }}</p>#}
+{#                            <p><strong>Проект:</strong> {{ task.project.name }}</p>#}
+{#                            <p><strong>Ответственный:</strong> {{ task.assigned_to.last_name }} {{ task.assigned_to.first_name }}</p>#}
+{#                            <p><strong>Статус:</strong> {{ task.status }}</p>#}
+{#                            <p><strong>Дата создания:</strong> {{ task.created_at }}</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<!-- Модальное окно для редактирования задачи -->#}
+{#<div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">#}
+{#    <div class="modal-dialog">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-header">#}
+{#                <h5 class="modal-title" id="editTaskModalLabel">Редактировать задачу</h5>#}
+{#                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{#                <form id="edit-task-form" method="POST" action="">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="hidden" id="edit-task-id">#}
+{#                    <div class="mb-3">#}
+{#                        <label for="edit-task-title" class="form-label">Название</label>#}
+{#                        <input type="text" class="form-control" id="edit-task-title" name="title">#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="edit-task-description" class="form-label">Описание</label>#}
+{#                        <textarea class="form-control" id="edit-task-description" name="description"></textarea>#}
+{#                    </div>#}
+{#                    <div class="mb-3">#}
+{#                        <label for="edit-task-status" class="form-label">Статус</label>#}
+{#                        <select class="form-select" id="edit-task-status" name="status">#}
+{#                            <option value="Выдана">Выдана</option>#}
+{#                            <option value="В работе">В работе</option>#}
+{#                            <option value="На проверке">На проверке</option>#}
+{#                            <option value="Выполнена">Выполнена</option>#}
+{#                        </select>#}
+{#                    </div>#}
+{#                    <button type="button" class="btn btn-primary" onclick="saveTaskChanges()">Сохранить изменения</button>#}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<script>#}
+{#function saveTaskChanges() {#}
+{#    const taskId = document.getElementById('edit-task-id').value;#}
+{#    const title = document.getElementById('edit-task-title').value;#}
+{#    const description = document.getElementById('edit-task-description').value;#}
+{#    const status = document.getElementById('edit-task-status').value;#}
+{##}
+{#    fetch(`/tasks/`, {#}
+{#        method: 'POST',#}
+{#        headers: {#}
+{#            'Content-Type': 'application/json',#}
+{#            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,#}
+{#        },#}
+{#        body: JSON.stringify({ id: taskId, title, description, status })#}
+{#    })#}
+{#    .then(response => response.json())#}
+{#    .then(data => {#}
+{#        if (data.success) {#}
+{#            location.reload(); // Перезагружаем страницу после успешного сохранения#}
+{#        } else {#}
+{#            alert('Ошибка при сохранении задачи');#}
+{#        }#}
+{#    })#}
+{#    .catch(error => {#}
+{#        console.error('Ошибка:', error);#}
+{#        alert('Произошла ошибка при сохранении задачи');#}
+{#    });#}
+{#}#}
+{##}
+{##}
+{#</script>#}
+{#{% endblock %}#}
+

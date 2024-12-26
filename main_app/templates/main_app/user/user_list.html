@@ -1,0 +1,19 @@
+<!-- templates/role_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список Работников</h2>
+<a href="{% url 'user_add' %}">Добавить Сотрудника</a>
+<ul>
+    {% for user in users %}
+        <div class="d-flex justify-content-between col-3 gap 1" >
+            <a style="text-decoration: None; color: black" href="{% url 'user_detail' user.pk %}">{{ user.username }}</a>
+            <div class="btn btn-primary">
+                <a style="color: white; text-decoration: None" href="{% url 'user_edit' user.pk %}">Редактировать</a>
+            </div>
+            <a class="btn btn-danger" href="{% url 'user_delete' user.pk %}">Удалить</a>
+        </div>
+        <br>
+    {% endfor %}
+</ul>
+{% endblock %}

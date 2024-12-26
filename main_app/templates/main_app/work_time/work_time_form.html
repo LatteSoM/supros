@@ -1,0 +1,12 @@
+<!-- templates/role_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{% if object.pk %}Редактировать часы{% else %}Добавить Часы{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+<a href="{% url 'work_time_list' %}">Назад к списку</a>
+{% endblock %}

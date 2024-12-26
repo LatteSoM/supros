@@ -1,0 +1,107 @@
+
+{% load static %}
+<div class="d-flex">
+    <div class="sidebar bg-light" style="color: black" id="sidebar">
+        <div class="sidebar-icon d-flex justify-content-end">
+            <button class="btn btn-light" id="toggleSidebar">
+                <span style="font-size: 20px;">&times;</span> <!-- Символ "X" -->
+            </button>
+        </div>
+        <div class="sidebar-content d-flex flex-column">
+            {% if request.session.user_role == 'Администратор' %}
+                <a href="/home" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                    <img src="{% static 'main_app/icons/setting.png' %}" style="width: 40px; height: 40px">
+                    <p class="ml-2">Панель Администратора</p>
+                </a>
+            {% endif %}
+
+            {% if request.session.user_role == 'Администратор' or request.session.user_role == 'Отдел Кадров'%}
+                <a href="/reestr" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                    <img src="{% static 'main_app/icons/personal-assistant.png' %}" style="width: 40px; height: 40px">
+                    <p class="ml-2">Реестр Сотрудников</p>
+                </a>
+                <a href="/deps" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                    <img src="{% static 'main_app/icons/hierarchy.png' %}" style="width: 40px; height: 40px">
+                    <p class="ml-2">Отделы</p>
+                </a>
+                <a href="/worktime" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                    <img src="{% static 'main_app/icons/working-hours.png' %}" style="width: 35px; height:35px">
+                    <p class="ml-2">Рабочее время</p>
+                </a>
+            {% endif %}
+            {% if request.session.user_role == 'Администратор' or request.session.user_role == 'Педорг' %}
+                <a href="/projects" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                    <img src="{% static 'main_app/icons/project.png' %}" style="width: 40px; height: 40px">
+                    <p class="ml-2">Проекты</p>
+                </a>
+                <a href="/tasks" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                    <img src="{% static 'main_app/icons/list.png' %}" style="width: 38px; height: 38px">
+                    <p class="ml-2">Задачи</p>
+                </a>
+            {% endif %}
+
+            <a href="/tasks_user" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                <img src="{% static 'main_app/icons/clipboard-user.png' %}" style="width: 38px; height: 38px">
+                <p class="ml-2">Мои Задачи</p>
+            </a>
+            <a href="/my-work-time" class="d-flex align-items-center p-3 gap-2" style="color: black">
+                <img src="{% static 'main_app/icons/performance.png' %}" style="width: 38px; height: 38px">
+                <p class="ml-2">Мои Рабочие часы</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#toggleSidebar').click(function() {
+            $('#sidebar').toggleClass('collapsed');
+        });
+    });
+</script>
+
+<style>
+    /* Дополнительные стили для сайдбара */
+    .sidebar {
+        height: 100vh;
+        transition: width 0.3s;
+    }
+    .sidebar.collapsed {
+        width: 110px; /* Ширина в сложенном состоянии */
+    }
+
+    .sidebar.collapsed p {
+        display: none; /* Скрыть текст в сложенном состоянии */
+    }
+
+    .sidebar-content {
+        align-items: flex-start; /* Выравнивание по левому краю в разложенном состоянии */
+    }
+
+    .sidebar-content a {
+        justify-content: flex-start; /* Выравнивание по левому краю в разложенном состоянии */
+    }
+
+    .sidebar-content img {
+        width: 24px; /* Размер иконок */
+        height: 24px;
+    }
+
+    .sidebar.collapsed .sidebar-content {
+        justify-content: center; /* Центрируем иконки в сложенном состоянии */
+        align-items: center; /* Центрируем иконки по вертикали */
+    }
+
+    .sidebar.collapsed .sidebar-content a {
+        justify-content: center; /* Центрируем иконки в сложенном состоянии */
+    }
+
+    .sidebar.collapsed .sidebar-icon {
+        display: block;
+        text-align: center; /*/* Центрируем иконки в сложенном состоянии */
+    }
+</style>
+

@@ -1,0 +1,101 @@
+:root{
+    font-size: 16px !important;
+
+    --color-white: #fff;
+    --color-black: #000;
+    --color-light-gray: #EFEDED;
+    --color-green: #2DA95F;
+    --color-gray-text: #9D9D9D;
+
+ }
+ *{
+    box-sizing: border-box;
+ }
+
+ ul, p, h1, h2, h3, figure, figcaption{
+    margin: 0;
+    padding: 0;
+ }
+
+ li {
+    list-style: none;
+ }
+
+ a {
+    text-decoration: none;
+ }
+
+ button{
+   border: none;
+ }
+
+ .clear{
+    clear: both;
+ }
+
+ /* fonts */
+
+ /* @font-face {
+     font-family: 'gilroy';
+     src: url('../fonts/blogger_sans-webfont.woff2') format('woff2'),
+          url('../fonts/blogger_sans-webfont.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+
+ }
+
+
+ @font-face {
+    font-family: 'gilroy';
+    src: url('../fonts/gilroy-heavy-webfont.woff2') format('woff2'),
+         url('../fonts/gilroy-heavy-webfont.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+
+ }
+
+ @font-face {
+    font-family: 'gilroy';
+    src: url('../fonts/blogger_sans-light-webfont.woff2') format('woff2'),
+         url('../fonts/blogger_sans-light-webfont.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+
+ }
+
+
+ @font-face {
+    font-family: 'gilroy';
+    src: url('../fonts/blogger_sans-medium-webfont.woff2') format('woff2'),
+         url('../fonts/blogger_sans-medium-webfont.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+
+ }
+
+ @font-face {
+   font-family: 'gilroy';
+   src: url('../fonts/blogger_sans-bold-webfont.woff2') format('woff2'),
+        url('../fonts/blogger_sans-bold-webfont.woff') format('woff');
+   font-weight: 700;
+   font-style: normal;
+
+} */
+
+ body{
+    font-family: 'Gilroy';
+    margin: 0;
+    width: 100%;
+ }
+
+ html, body{
+    height: 100%;
+ }
+
+ .boba{
+    font-family: 'Gilroy';
+    font-weight: 800;
+ }
+
+
+

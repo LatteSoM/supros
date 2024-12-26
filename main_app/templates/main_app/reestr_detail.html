@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">
+{#        <a href="{% url 'salary_trend' employee.id %}" class="btn btn-primary">График изменения зарплаты</a>#}
+
+        <h1>Детали сотрудника: {{ employee }}</h1>
+        <h1>Статус: {{ employee.status }}</h1>
+
+        <h3>Пользователи</h3>
+        <ul class="d-flex justify-content-between col-8">
+            {% for user in users %}
+                Имя пользователя: {{ user.username }} , Роль - {{ user.role }}
+                <a class="btn btn-primary" href="{% url "user_edit" user.id %}" >Изменить</a>
+            {% empty %}
+                <li>Нет пользователей</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Должности и отделы</h3>
+        <ul class="d-flex flex-column gap-2">
+            {% for position in positions %}
+                <d class="gr-q d-flex justify-content-between col-8">
+                    {{ position.position.name }} ({{ position.position.department.name }})
+                     <a class="btn btn-primary" href="{% url "emp_position_edit" position.id %}" >Изменить</a>
+                </d>
+
+            {% empty %}
+                <li>Нет должностей</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Зарплатные данные</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Год</th>
+                    <th>Месяц</th>
+                    <th>Зарплата</th>
+                    <th>Бонусы</th>
+                    <th>Удержания</th>
+                    <th>Чистая зарплата</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payroll in payrolls %}
+                    <tr>
+                        <td>{{ payroll.year }}</td>
+                        <td>{{ payroll.month }}</td>
+                        <td>{{ payroll.salary }}</td>
+                        <td>{{ payroll.bonuses }}</td>
+                        <td>{{ payroll.deductions }}</td>
+                        <td>{{ payroll.net_salary }}</td>
+                    </tr>
+
+
+                {% empty %}
+                    <tr>
+                        <td colspan="6">Нет данных о зарплате</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="graph-container">
+            <img src="data:image/png;base64,{{ graph }}" alt="Salary Trend Graph">
+        </div>
+        <br>
+        <div class="d-flex col-3 gap-2">
+            <h3>Документы</h3>
+            <a class="btn btn-primary" href="{% url "document_add"  %}" >Добавить</a>
+        </div>
+        <ul>
+            {% for document in documents %}
+                <li>{{ document.document_type.name }}: {{ document.document_number }} (выдан: {{ document.issue_date }})</li>
+            {% empty %}
+                <li>Нет документов</li>
+            {% endfor %}
+        </ul>
+
+        <br>
+        <div class="d-flex col-3 gap-2">
+            <h3>Задачи</h3>
+            <a class="btn btn-primary" href="{% url "task_add"  %}" >Добавить</a>
+        </div>
+
+
+        <ul class="d-flex flex-column gap-2">
+            {% for task in tasks %}
+                <deiv class="d-flex justify-content-between col-8">
+                    {{ task.title }} (Статус: {{ task.status }}) -- {{ task.project }}
+                    <a class="btn btn-primary" href="{% url "task_edit_page" task.id %}" >Изменить</a>
+                </deiv>
+
+            {% empty %}
+                <li>Нет задач</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'user_list' %}" class="btn btn-secondary mt-4">Назад к списку пользователей</a>
+    </div>
+{% endblock %}

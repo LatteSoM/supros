@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .graph-container {
+        display: flex;
+        justify-content: center;
+    }
+    img {
+        max-width: 90%;
+        height: auto;
+    }
+</style>
+
+    <h1>График изменения зарплаты для  {{ employee.first_name }} {{ employee.last_name }}</h1>
+    <div class="graph-container">
+        <img src="data:image/png;base64,{{ graph }}" alt="Salary Trend Graph">
+    </div>
+
+{% endblock %}
+

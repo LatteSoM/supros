@@ -1,0 +1,15 @@
+<!-- templates/role_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Работник: {{ payroll.employee }}</h2>
+<h2>Месяц: {{ payroll.month }}</h2>
+<h2>Год: {{ payroll.year }}</h2>
+<h2>Бонусы и надбавки: {{ payroll.bonuses }}</h2>
+<h2>Налоги: {{ payroll.deductions }}</h2>
+<h2>Зарплата: {{ payroll.salary }}</h2>
+<h2>Чистая зарплата: {{ payroll.net_salary }}</h2>
+
+<h2>Идетификатор: {{ task.pk }}</h2>
+<a href="{% url 'payroll_list' %}">Назад к списку</a>
+{% endblock %}

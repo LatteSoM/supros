@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Название проекта: {{ project.name }}</h2>
+<h2>Описание проекта: {{ project.description }}</h2>
+<h2>Дата начала: {{ project.start_date }}</h2>
+<h2>Дата окончания: {{ project.end_date }}</h2>
+<h2>Создан пользователем: {{ project.created_by }}</h2>
+
+<p>Идентификатор: {{ project.id }}</p>
+<a href="{% url 'project_list' %}">Назад к списку</a>
+{% endblock %}

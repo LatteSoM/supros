@@ -1,0 +1,8 @@
+<!-- templates/role_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Роль: {{ role.name }}</h2>
+<p>Идентификатор: {{ role.id }}</p>
+<a href="{% url 'role_list' %}">Назад к списку</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+<!-- templates/role_confirm_delete.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Удалить Должность у  сотрудника</h2>
+<p>Вы уверены, что хотите удалить Должность"{{ employeeposition.position }} у сотрудника {{ employeeposition.employee }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Да, удалить</button>
+    <a href="{% url 'emp_position_list' %}">Отмена</a>
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!-- templates/role_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список Зарплат</h2>
+<a href="{% url 'payroll_add' %}">Добавить Зарплату</a>
+<ul>
+    {% for payroll in payrolls %}
+        <div class="d-flex justify-content-between col-5 gap 1" >
+            <a style="text-decoration: None; color: black" href="{% url 'payroll_detail' payroll.pk %}">{{ payroll.employee }} - {{ payroll.month }}</a>
+            <div class="btn btn-primary">
+                <a style="color: white; text-decoration: None" href="{% url 'payroll_edit' payroll.pk %}">Редактировать</a>
+            </div>
+            <a class="btn btn-danger" href="{% url 'payroll_delete' payroll.pk %}">Удалить</a>
+        </div>
+        <br>
+    {% endfor %}
+</ul>
+{% endblock %}

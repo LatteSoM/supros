@@ -1,0 +1,14 @@
+<!-- templates/role_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Задача: {{ task.title }}</h2>
+<h2>Проект: {{ task.project }}</h2>
+<h2>Назначена для : {{ task.assigned_to }}</h2>
+<h2>Когда создана: {{ task.created_at }}</h2>
+<h2>Статус: {{ task.status }}</h2>
+<h2>Описание: {{ task.description }}</h2>
+
+<h2>Идетификатор: {{ task.pk }}</h2>
+<a href="{% url 'task_list' %}">Назад к списку</a>
+{% endblock %}

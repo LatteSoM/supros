@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Удалить роль</h2>
+<p>Вы уверены, что хотите удалить Задачу "{{ task.title }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Да, удалить</button>
+    <a href="{% url 'task_list' %}">Отмена</a>
+</form>
+{% endblock %}

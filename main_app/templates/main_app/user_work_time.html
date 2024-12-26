@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Мои рабочие часы</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Дата</th>
+                <th>Часы работы</th>
+                <th>Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for work_time in work_times %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ work_time.date }}</td>
+                <td>{{ work_time.hours_worked }}</td>
+                <td>{{ work_time.description|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Нет записей рабочего времени.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

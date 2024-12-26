@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Редактирование задачи: {{ task.title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="task-title" class="form-label">Название</label>
+            {{ form.title }}
+        </div>
+        <div class="mb-3">
+            <label for="task-description" class="form-label">Описание</label>
+            {{ form.description }}
+        </div>
+{#        <div class="mb-3">#}
+{#            <label for="task-status" class="form-label">Статус</label>#}
+{#            {{ form.status }}#}
+{#        </div>#}
+         <div class="mb-3">
+            <label for="task-status" class="form-label">Статус</label>
+            <select name="status" id="task-status" class="form-select">
+                <option value="Выдана" {% if task.status == 'Выдана' %}selected{% endif %}>Выдана</option>
+                <option value="В работе" {% if task.status == 'В работе' %}selected{% endif %}>В работе</option>
+                <option value="Выполнена" {% if task.status == 'Выполнена' %}selected{% endif %}>Выполнена</option>
+                <option value="На проверке" {% if task.status == 'На проверке' %}selected{% endif %}>На проверке</option>
+                <option value="На доработке" {% if task.status == 'На доработке' %}selected{% endif %}>На доработке</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="{% url 'task_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

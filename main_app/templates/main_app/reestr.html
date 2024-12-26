@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container mt-5">
+        <h1>Список сотрудников</h1>
+
+        <form method="get" class="mb-4">
+            <div class="form-row d-flex justify-content-center flex-row gap-2">
+                <div class="col">
+                    <select name="department" class="form-control">
+                        <option value="">Выберите отдел</option>
+                        {% for department in departments %}
+                            <option value="{{ department.id }}">{{ department.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <select name="position" class="form-control">
+                        <option value="">Выберите должность</option>
+                        {% for position in positions %}
+                            <option value="{{ position.id }}">{{ position.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="text" name="search" class="form-control" placeholder="Поиск по имени или фамилии">
+                </div>
+                <div class="col d-flex justify-content-between flex-row">
+                    <button type="submit" class="btn btn-primary">Фильтровать</button>
+                    <a href="{% url 'employee_add_reestr' %}" class="btn btn-success">+ Сотрудник</a>
+                </div>
+{#                <div class="col">#}
+{#                    <a href="{% url 'employee_add' %}" class="btn btn-success">Добавить сотрудника</a>#}
+{#                </div>#}
+            </div>
+        </form>
+
+        <div class="row">
+            {% for emp in employees %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ emp }}</h5>
+                            <p class="card-text">Email: {{ emp.email }}</p>
+                            <p class="card-text">Дата найма: {{ emp.date_hired }}</p>
+                            <a href="{% url 'reestr_detail' emp.pk %}" class="btn btn-primary">Просмотреть детали</a>
+                            <a href="{% url 'employee_edit' emp.pk %}" class="btn btn-warning">Изменить</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+<!-- templates/role_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Имя: {{ employee.first_name }}</h2>
+<h2>Фамилия: {{ employee.last_name }}</h2>
+<h2>Почта: {{ employee.email }}</h2>
+<p>Идентификатор: {{ employee.id }}</p>
+<a href="{% url 'employee_list' %}">Назад к списку</a>
+{% endblock %}

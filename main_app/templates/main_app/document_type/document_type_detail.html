@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Тип документа: {{ document_type.name }}</h2>
+<p>Идентификатор: {{ document_type.id }}</p>
+<a href="{% url 'document_type_list' %}">Назад к списку</a>
+{% endblock %}

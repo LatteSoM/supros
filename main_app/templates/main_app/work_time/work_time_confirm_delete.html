@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Удалить Рабочие часы</h2>
+<p>Вы уверены, что хотите удалить {{ worktime.hours_worked }} Рабочие часы за "{{ worktime.date }} у сотрудника {{ worktime.employee }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Да, удалить</button>
+    <a href="{% url 'work_time_list' %}">Отмена</a>
+</form>
+{% endblock %}

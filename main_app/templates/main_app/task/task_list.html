@@ -1,0 +1,19 @@
+<!-- templates/role_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список Задач</h2>
+<a href="{% url 'task_add' %}">Добавить Задачи</a>
+<ul>
+    {% for task in tasks %}
+        <div class="d-flex justify-content-between col-5 gap 1" >
+            <a style="text-decoration: None; color: black" href="{% url 'task_detail' task.pk %}">{{ task.title }} - {{ task.project }}</a>
+            <div class="btn btn-primary">
+                <a style="color: white; text-decoration: None" href="{% url 'task_edit' task.pk %}">Редактировать</a>
+            </div>
+            <a class="btn btn-danger" href="{% url 'task_delete' task.pk %}">Удалить</a>
+        </div>
+        <br>
+    {% endfor %}
+</ul>
+{% endblock %}
