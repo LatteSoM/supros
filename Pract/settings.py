@@ -128,8 +128,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kursach',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432'
     }

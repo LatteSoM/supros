@@ -26,7 +26,13 @@
                 </d>
 
             {% empty %}
-                <li>Нет должностей</li>
+                <d class="qr-q d-flex justify-content-between col-5">
+                    <li>Нет должностей</li>
+                    <a class="btn btn-primary col-3" href="{% url "emp_position_add"  %}" >Добавить</a>
+                </d>
+
+
+
             {% endfor %}
         </ul>
 

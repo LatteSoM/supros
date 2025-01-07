@@ -22,6 +22,7 @@ urlpatterns = [
     path('tasks/', task_list, name='tasks_list'),
     path('tasks/edit/<int:task_id>/', task_edit_page, name='task_edit_page'),
     path('tasks_user/', user_tasks, name='user_task_page'),
+    path('settings/', v.settings, name='settings_page'),
 
     path('departments/', DepartmentListView.as_view(), name='department_list'),
     path('departments/<int:pk>/', DepartmentDetailView.as_view(), name='department_detail'),

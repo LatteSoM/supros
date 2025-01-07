@@ -3,11 +3,53 @@
 
 {% block content %}
 <h2>{% if object.pk %}Редактировать Сотрудника{% else %}Добавить Сотрудника{% endif %}</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
+{#<form method="post">#}
+{#    {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <button type="submit">Сохранить</button>#}
+{#</form>#}
+    <form method="post" class="needs-validation" novalidate>
+    <input type="hidden" name="csrfmiddlewaretoken" value="ff2bTqbXL5xoe6MgZT29Q45emv7jR3JYLiR0LMJsXG8nMOxq0iX3hVoeXnfh6qU5">
+
+    <div class="mb-3">
+        <label for="id_first_name" class="form-label">Имя:</label>
+        <input type="text" class="form-control" name="first_name" maxlength="255" required id="id_first_name" placeholder="Введите имя">
+        <div class="invalid-feedback">Пожалуйста, укажите имя.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_last_name" class="form-label">Фамилия:</label>
+        <input type="text" class="form-control" name="last_name" maxlength="255" required id="id_last_name" placeholder="Введите фамилию">
+        <div class="invalid-feedback">Пожалуйста, укажите фамилию.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_email" class="form-label">Адрес эл. почты:</label>
+        <input type="email" class="form-control" name="email" maxlength="254" required id="id_email" placeholder="Введите адрес эл. почты">
+        <div class="invalid-feedback">Пожалуйста, укажите корректный адрес электронной почты.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_date_hired" class="form-label">Дата приема на работу:</label>
+        <input type="date" class="form-control" name="date_hired" required id="id_date_hired">
+        <div class="invalid-feedback">Пожалуйста, укажите дату приема на работу.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_status" class="form-label">Статус:</label>
+        <select class="form-select" name="status" id="id_status">
+            <option value="Работает" selected>Работает</option>
+            <option value="В отпуске">В отпуске</option>
+            <option value="Уволен">Уволен</option>
+        </select>
+        <div class="invalid-feedback">Пожалуйста, выберите статус.</div>
+    </div>
+
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
 </form>
+
 {#<a href="{% url 'employee_list' %}">Назад к списку</a>#}
 <a href="javascript:history.back()">Назад к списку</a>
 {% endblock %}
